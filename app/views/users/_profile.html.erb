@@ -1,0 +1,31 @@
+<table class="table">
+
+    <!-- プロフィール編集エラー -->
+    <% if current_user.errors.any? %>
+      <div>
+        <div><%= current_user.errors.count %> error prohibited this obj from being saved:
+        </div>
+        <ul>
+          <% current_user.errors.full_messages.each do |message| %>
+           <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+	<tr>
+		<th><%= attachment_image_tag user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg" %></th>
+	</tr>
+
+	<tr>
+		<th>name</th>
+		<th><%= user.name %></th>
+	</tr>
+
+	<tr>
+		<th>introduction</th>
+		<th><%= user.introduction %></th>
+	</tr>
+</table>
+
+<%= link_to '',edit_user_path(user.id), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench" %>
