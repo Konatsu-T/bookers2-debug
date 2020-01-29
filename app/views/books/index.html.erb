@@ -19,6 +19,8 @@
 					<th>Title</th>
 					<th>Opinion</th>
 					<th colspan="3"></th>
+					<th></th>
+					<th></th>
 				</tr>
 				</thead>
 
@@ -32,6 +34,29 @@
 					</td>
 					<td><%= link_to book.title, book, class: "book_#{book.id}" %></td>
 					<td><%= book.body %></td>
+					<!-- いいね機能 ここから-->
+					<% if book.favorited_by?(current_user) %>
+						<!-- 投稿に付いたいいねに自分が含まれているとき -->
+						<td><%= link_to book_favorites_path(book), method: :delete do %>
+							 <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+							 <%= book.favorites.count %>
+							 <% end %>
+						</td>
+							<% else %>
+						<!-- 投稿に付いたいいねに自分が含まれないとき -->
+						<td><%= link_to book_favorites_path(book), method: :post do %>
+							 <i class="fa fa-heart-o" aria-hidden="true"></i>
+							 <%= book.favorites.count %>
+							 <% end %>
+						</td>
+					<% end%>
+					<!-- いいね機能　ここまで -->
+
+					<!-- コメント件数 -->
+					<td>
+						<i class="fa fa-comment"></i>
+						<a href="#comments"><%= book.book_comments.count %></a></td>
+
 					</tr>
 				<% end %>
 				</tbody>

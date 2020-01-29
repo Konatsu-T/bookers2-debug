@@ -3,10 +3,11 @@ before_action :authenticate_user!
 
   def show
     @user = current_user
-  	@book = Book.find(params[:id])
-    @user1 = @book.user
     @newbook = Book.new
     @books = Book.all
+  	@book = Book.find(params[:id])
+    @user1 = @book.user
+    @book_comment = BookComment.new
   end
 
   def index
