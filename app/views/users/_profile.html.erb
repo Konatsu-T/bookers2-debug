@@ -25,7 +25,20 @@
 	<tr>
 		<th>introduction</th>
 		<th><%= user.introduction %></th>
-	</tr>
+  </tr>
+
+  <tr>
+    <th>follows</th>
+    <th><%= link_to @user.follower.count, user_follows_path(@user) %></th>
+  </tr>
+
+  <tr>
+    <th>followers</th>
+    <th><%= link_to @user.followed.count, user_followers_path(@user) %></th>
+  </tr>
 </table>
 
+<!-- プロフィール編集ボタン -->
+<% if user == current_user %>
 <%= link_to '',edit_user_path(user.id), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench" %>
+<% end %>

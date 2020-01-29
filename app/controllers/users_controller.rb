@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :ensure_cerrent_user, {only: [:edit, :update, :destroy]}
+  before_action :ensure_current_user, {only: [:edit, :update, :destroy]}
 
   def show
   	@user = User.find(params[:id])
@@ -27,12 +27,20 @@ class UsersController < ApplicationController
   	end
   end
 
+  def follows
+    @user = User.find(params[:user_id])
+  end
+
+  def followers
+    @user = User.find(params[:user_id])
+  end
+
   private
   def user_params
   	params.require(:user).permit(:name, :introduction, :profile_image)
   end
 
-def ensure_cerrent_user
+def ensure_current_user
   @user = User.find(params[:id])
   if @user.id != current_user.id
     redirect_to user_path(current_user.id)

@@ -1,18 +1,7 @@
 <div class="container">
   <div class="row">
-   <div class="col-xs-4">
-
-		<h2>User info</h2>
-		<%= render 'users/profile', user: current_user %>
-		<!--メモ　右側の指定に注意。そこを間違えるとエラーが発生して表示されない -->
-
-		<h2>New book</h2>
-		<%= render 'books/newform', book: @book %>
-	</div>
-
-		<div class="col-xs-8">
-			<h2>Users</h2>
-			<!--users一覧 -->
+			<!--followers一覧 -->
+			<h2>Follower Users</h2>
 			<table class="table">
 				<thead>
 					<tr>
@@ -23,31 +12,26 @@
 				</thead>
 
 				<tbody>
-					<% @users.each do |user| %>
+					<% @user.follower_user.each do |user| %>
 					<tr>
 						<td><%= link_to(user) do %>
 							<%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %>
 							<% end %>
 						</td>
 						<td><%= user.name%></td>
-
 						<!-- フォロー数・フォロワー数 -->
 						<td><%= "フォロー数: #{user.follower.count}" %></td>
 						<td><%= "フォロワー数: #{user.followed.count}" %></td>
 						<!-- フォローする・外すリンク -->
-						<% unless user == current_user %>
 						<% if current_user.following?(user) %>
 						<td><%= link_to 'フォロー外す', unfollow_path(user.id), method: :delete %></td>
 						<% else %>
 						<td><%= link_to 'フォローする', follow_path(user.id), method: :post %></td>
 						<% end %>
-					    <% end %>
 						<td><%= link_to "Show", user, class: "user_#{user.id}" %></td>
 					</tr>
 					<% end %>
 				</tbody>
 			</table>
-			<!--users一覧 -->
-		</div>
 	</div>
 </div>
