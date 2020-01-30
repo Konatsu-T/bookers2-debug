@@ -34,4 +34,25 @@ class User < ApplicationRecord
   def following?(user)
     following_user.include?(user)
   end
+
+  def User.search(search, user_or_post, how_search)
+    if user_or_post == "1"
+      # 部分一致
+      if how_search == "1"
+         User.where(['name LIKE ?', "%#{search}%"])
+      # 後方一致
+      elsif how_search == "2"
+        User.where(['name LIKE ?', "%#{search}"])
+      # 前方一致
+      elsif how_search == "3"
+        User.where(['name LIKE ?', "#{search}%"])
+      # 完全一致
+      elsif how_search == "4"
+        User.where(['name LIKE ?', "#{search}"])
+      else
+        User.all
+      end
+    end
+  end
+
 end

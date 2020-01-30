@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'searchs/search'
   get 'relationships/create'
   get 'relationships/destroy'
   devise_for :users
@@ -17,6 +18,9 @@ Rails.application.routes.draw do
   end
   root 'homes#top'
   get 'home/about' => 'homes#about'
+
+  # root 'searches#search'
+  get '/search', to: 'searches#search'
 
   # フォローする(users/index用)
   post 'follow/:id' => 'relationships#create', as: 'follow'
