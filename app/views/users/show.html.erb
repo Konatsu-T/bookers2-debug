@@ -5,12 +5,12 @@
 			<%= render 'users/profile', user: @user %>
 			<!--同コントローラーのviewで表示ならusersは省略可 -->
 
-			<!-- フォローする・外すリンク -->
+			<!-- フォローする・外すボタン -->
 			<% unless @user == current_user %>
 				<% if current_user.following?(@user) %>
-					<%= link_to 'フォロー外す', destroy_show_user_relationship_path(@user.id), method: :delete, class: "col-xs-4 btn btn-danger" %>
-				<% else %>
-					<%= link_to 'フォローする', create_show_user_relationship_path(@user.id), method: :post, class: "col-xs-4 btn btn-success" %>
+					<%= link_to 'フォロー外す', unfollow_path(@user.id), method: :delete, class: "col-xs-4 btn btn-danger" %>
+	            <% else %>
+	              <%= link_to 'フォローする', follow_path(@user.id), method: :post, class: "col-xs-4 btn btn-success" %>
 				<% end %>
 			<% end %>
 			<br><br>

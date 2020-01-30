@@ -3,32 +3,23 @@ before_action :authenticate_user!
 
 	def create
 		current_user.create(params[:id])
-		redirect_to users_path
+		redirect_to request.referer
 	end
 
 	def destroy
 		current_user.destroy(params[:id])
-		redirect_to users_path
+		redirect_to request.referer
 	end
 
-	def create_show
-		current_user.create(params[:id])
-		redirect_to user_path
+	# ユーザのフォロー一覧
+	def follower
+		user = User.find(params[:user_id])
+		@users = user.following_user
 	end
 
-	def destroy_show
-		current_user.destroy(params[:id])
-		redirect_to user_path
+	# ユーザのフォロワー一覧
+	def followed
+		user = User.find(params[:user_id])
+		@users = user.follower_user
 	end
-
-	def follows_index
-		current_user.create(params[:id])
-		redirect_to user_follows_path
-	end
-
-	def followers_index
-		current_user.destroy(params[:id])
-		redirect_to user_follows_path
-	end
-
 end

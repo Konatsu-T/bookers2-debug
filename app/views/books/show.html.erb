@@ -4,10 +4,17 @@
 
 			<h2>User info</h2>
 			<%= render 'users/profile', user: @user1 %>
+				<% unless @user1 == current_user %>
+					<% if current_user.following?(@user1) %>
+						<%= link_to 'フォロー外す', unfollow_path(@user1.id), method: :delete, class: "col-xs-4 btn btn-danger" %>
+					<% else %>
+						<%= link_to 'フォローする', follow_path(@user1.id), method: :post, class: "col-xs-4 btn btn-success" %>
+					<% end %>
+				<% end %>
+				<br><br>
 
 			<h2>New book</h2>
 			<%= render 'books/newform', book: @newbook %>
-
 		</div>
 
 		<div class="col-xs-8">
